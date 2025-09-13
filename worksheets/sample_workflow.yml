@@ -1,0 +1,31 @@
+name: First workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Print message
+        run: |
+          echo "First workflow"
+          echo "repo: ${{ github.event.repository.name }}"
+          pr_link=$(jq -r '.pull_request.html_url' "$GITHUB_EVENT_PATH")
+          echo "pr link: $pr_link"
+        shell: bash
+
+  bye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bye
+        run: echo "Completed!!"
+        shell: bash
+
